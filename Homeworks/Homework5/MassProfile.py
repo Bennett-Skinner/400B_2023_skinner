@@ -255,17 +255,17 @@ def velocity_curves(galShorthand,timestamp,test_a):
     disk_velocities = galaxy.CircularVelocity(2, rs) # Get disk-caused circular velocity
     if galShorthand != 'M33': # Don't plot buldge values for M33
         buldge_velocities = galaxy.CircularVelocity(3, rs) # Get buldge-caused velocity
-        plt.semilogy(rs,buldge_velocities,color='maroon',linestyle='dotted',label="Buldge Stars") # Plot buldge-caused velocity curve
+        plt.plot(rs,buldge_velocities,color='maroon',linestyle='dotted',label="Buldge Stars") # Plot buldge-caused velocity curve
     total_velocities = galaxy.CircularVelocityTotal(rs) # Get circular velocity from galactic mass
     DM_mass = ComponentMass(galaxy.filename, 1.0)*1e12*u.Msun # Get total galactic DM mass
     hernquist_velocities = np.zeros(len(rs))*u.km/u.s # Create dummy array for Hernquist Circular Velocities
     for ri in range(len(rs)): # Index through radii
         hernquist_velocities[ri] = HernquistVCirc(rs[ri],test_a*u.kpc,DM_mass) # Get Hernquist Circular Velocity within radii
     plt.title(galName+' Circular Velocity Profile') # Add plot title
-    plt.semilogy(rs,DM_velocities,color='lime',linestyle='dashdot',label="Dark Matter") # Plot DM-caused velocity curve
-    plt.semilogy(rs,disk_velocities,color='teal',linestyle='dashed',label="Disk Stars") # Plot disk-caused velocity curve
-    plt.semilogy(rs,total_velocities,color='black',linestyle='solid',label="Total") # Plot velocity curve
-    plt.semilogy(rs,hernquist_velocities,color='khaki',linestyle='solid',label="Hernquist Best Fit, a="+str(test_a)) # Plot theoretical velocity curve
+    plt.plot(rs,DM_velocities,color='lime',linestyle='dashdot',label="Dark Matter") # Plot DM-caused velocity curve
+    plt.plot(rs,disk_velocities,color='teal',linestyle='dashed',label="Disk Stars") # Plot disk-caused velocity curve
+    plt.plot(rs,total_velocities,color='black',linestyle='solid',label="Total") # Plot velocity curve
+    plt.plot(rs,hernquist_velocities,color='khaki',linestyle='solid',label="Hernquist Best Fit, a="+str(test_a)) # Plot theoretical velocity curve
     plt.legend(loc='lower right') # Add labels for curves
     plt.xlabel('Radius (kpc)') # Label x axis
     plt.ylabel('Velocity (km/s)') # Label y axis
