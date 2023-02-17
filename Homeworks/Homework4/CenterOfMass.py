@@ -153,9 +153,9 @@ class CenterOfMass:
 
             # Change the frame of reference to the newly computed COM.                                                 
             # subtract the new COM
-            x_new = x2 - x_COM2
-            y_new = y2 - y_COM2
-            z_new = z2 - z_COM2
+            x_new = self.x - x_COM2
+            y_new = self.y - y_COM2
+            z_new = self.z - z_COM2
             r_new = np.sqrt(x_new**2+y_new**2+z_new**2)
 
             # set the center of mass positions to the refined values                                                   
