@@ -77,7 +77,7 @@ class CenterOfMass:
         return a_com, b_com, c_com
     
     
-    def COM_P(self, delta):
+    def COM_P(self, delta, volDec):
         '''Method to compute the position of the center of mass of the galaxy 
         using the shrinking-sphere method.
 
@@ -85,6 +85,9 @@ class CenterOfMass:
         ----------
         delta : `float, optional`
             error tolerance in kpc. Default is 0.1 kpc
+        
+        volDec: 'float, optional'
+            factor by which to decrease radius each iteration of COM fitting
         
         RETURNS
         ----------
@@ -113,7 +116,7 @@ class CenterOfMass:
 
         # find the max 3D distance of all particles from the guessed COM                                               
         # will re-start at half that radius (reduced radius)                                                           
-        r_max = max(r_new)/2.0
+        r_max = max(r_new)/volDec
         
         # pick an initial value for the change in COM position                                                      
         # between the first guess above and the new one computed from half that volume
@@ -146,8 +149,8 @@ class CenterOfMass:
 
             # Before loop continues, reset : r_max, particle separations and COM                                        
 
-            # reduce the volume by a factor of 2 again                                                                 
-            r_max /= 2.0
+            # reduce the volume by a factor of voLDec again                                                                 
+            r_max /= volDec
             # check this                                                                                           
             # print("maxR", r_max)                                                                                      
 
@@ -235,17 +238,17 @@ if __name__ == '__main__' :
 
     # Store and print position and velocity COMs for each galaxy
     print("Q1")
-    MW_COM_p = MW_COM.COM_P(0.1)
+    MW_COM_p = MW_COM.COM_P(0.1,2)
     print("Milky Way COM:", MW_COM_p)
     MW_COM_v = MW_COM.COM_V(MW_COM_p[0], MW_COM_p[1], MW_COM_p[2])
     print("Milky Way COM velocity:", MW_COM_v)
     
-    M31_COM_p = M31_COM.COM_P(0.1)
+    M31_COM_p = M31_COM.COM_P(0.1,2)
     print("M31 COM:", M31_COM_p)
     M31_COM_v = M31_COM.COM_V(M31_COM_p[0], M31_COM_p[1], M31_COM_p[2])
     print("M31 COM velocity:", M31_COM_v)
     
-    M33_COM_p = M33_COM.COM_P(0.1)
+    M33_COM_p = M33_COM.COM_P(0.1,4)
     print("M33 COM:", M33_COM_p)
     M33_COM_v = M33_COM.COM_V(M33_COM_p[0], M33_COM_p[1], M33_COM_p[2])
     print("M33 COM velocity:", M33_COM_v)
